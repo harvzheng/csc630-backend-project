@@ -14,6 +14,8 @@ let country = "Germany"
 
 https.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${number}+${street}+${town},${state}+${country}&key=${api_key}`, (res) => {
  /*give credit for this*/
+
+    console.log(`API KEY is ${api_key}`)
     res.on('data', (chunk) => {
         data += chunk;
     });
