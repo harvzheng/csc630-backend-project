@@ -3,7 +3,7 @@ const https = require('https')
 const app = express()
 const port = 4000
 const onlineport = process.env.PORT
-const api_key = "AIzaSyBDKo6Hf-ZLyroGPc-3GUpQVjorWvVMI7g"
+const api_key = process.env.API_KEY
 
 let data = '';
 let street = "Bachstrasse"
