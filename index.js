@@ -21,6 +21,6 @@ https.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${number}+$
 
 })
 
-app.get('/', (req, res) => res.send(JSON.parse(data)['results'][0]['geometry']['location']))
+app.get('/', (req, res) => res.send(api_key/*JSON.parse(data)['results'][0]['geometry']['location']*/))
 app.listen(onlineport || port ,  () => console.log(`Example app listening on port ${port}!`));
 /* promises */
