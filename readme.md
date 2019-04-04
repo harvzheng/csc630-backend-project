@@ -3,7 +3,12 @@ Dependencies:
 - MySQL
 - NodeJS
 
-After downloading the files, create a file name ".env" and put the following variables in it:
+After downloading the files, run
+```sh
+$ npm install
+```
+
+Next, create a file named ".env" and put the following variables in it:
 1. DB_HOST=*your_db_host*
     - This will typically be localhost
 2. DB_USER=*your_db_username*
