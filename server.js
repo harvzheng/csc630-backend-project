@@ -11,9 +11,6 @@ const con = mysql.createConnection({
 con.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
-  con.query("use ?", [process.env.DATABASE], function (err, result) {
-    if (err) throw err;
-  });
   var users = "CREATE TABLE IF NOT EXISTS `users` (`id` int(5) AUTO_INCREMENT, `display_name` varchar(255), `username` varchar(255), `latitude` Decimal(9,6), `longitude` Decimal(9,6), PRIMARY KEY (`id`));";
   con.query(users, function (err, result) {
     if (err) throw err;

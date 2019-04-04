@@ -13,9 +13,19 @@ const con = mysql.createConnection({
   database: process.env.DATABASE,
 });
 
-con.connect(function(err){
-  if (err) throw err
-  console.log("Connected with database");
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+  var users = "CREATE TABLE IF NOT EXISTS `users` (`id` int(5) AUTO_INCREMENT, `display_name` varchar(255), `username` varchar(255), `latitude` Decimal(9,6), `longitude` Decimal(9,6), PRIMARY KEY (`id`));";
+  con.query(users, function (err, result) {
+    if (err) throw err;
+    console.log("User table created");
+  });
+  var loc = "CREATE TABLE IF NOT EXISTS `locations` (`id` int(5) AUTO_INCREMENT, `user_id` varchar(255), `title` varchar(255), `house_number` int(7), `street` varchar(255), `city` varchar(255), `state` varchar(255), `country` varchar(255), `latitude` Decimal(9,6), `longitude` Decimal(9,6), PRIMARY KEY (`id`));";
+  con.query(loc, function (err, result){
+    if (err) throw err;
+    console.log("Locations table created");
+  });
 });
 
 app.use(express.urlencoded({ extended: false }));
