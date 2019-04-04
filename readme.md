@@ -16,6 +16,7 @@ Next, create a file named ".env" and put the following variables in it:
 3. DB_HOST=*your_db_password*
     - This is what the password to your MySQL Database is
 
+<<<<<<< Updated upstream
 Then, you'll want to set up the right tables. You can do this by running
 ```sh
 $ node server.js
