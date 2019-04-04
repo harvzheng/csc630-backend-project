@@ -4,16 +4,13 @@ const con = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
+  database: process.env.DATABASE,
 });
 // modified from https://www.w3schools.com/nodejs/nodejs_mysql_create_table.asp
 
 con.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
-  con.query("CREATE DATABASE IF NOT EXISTS `project1`", function (err, result) {
-    if (err) throw err;
-    console.log("Database created");
-  });
   con.query("use project1", function (err, result) {
     if (err) throw err;
   });

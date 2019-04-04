@@ -10,7 +10,7 @@ const con = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
-  database: 'project1',
+  database: process.env.DATABASE,
 });
 
 con.connect(function(err){
@@ -21,7 +21,7 @@ con.connect(function(err){
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const server = app.listen(process.env.PORT || 3000);
+const server = app.listen(process.env.PORT);
 
 app.get('/', function(req, res) {
   res.send("test");
