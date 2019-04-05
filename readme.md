@@ -9,7 +9,7 @@ First, run
 ```sh
 $ npm install
 ```
-To get the right packages installed.
+to get the right packages installed.
 Then, create a file name ".env" and put the following variables in it:
 - DB_HOST=*your_db_host*
     - This will typically be localhost
@@ -19,13 +19,15 @@ Then, create a file name ".env" and put the following variables in it:
     - This is what the password to your MySQL Database is
 - API_KEY=*your_google_geocoding_api_key*
 - DATABASE=*name_of_database*
-    - Before starting to play with this locally, you'll want to set up a new database in MySQL. Put the name of that database in here.
+    - Before starting to play with this locally, you'll need to create a new database in MySQL. Put the name of that database in here.
 - PORT=*port_of_your_choosing*
+    - This project uses a port of 3000, as visible in the urls below
 
 Once that's done, to get the server up and running just run
 ```sh
 $ node index.js
 ```
+All the code is in `index.js`, including creating a connection to the database and the routing. 
 ## Sending HTTP Requests
 
 ### GET
@@ -46,7 +48,12 @@ Display's the single user's points of interest
 http://localhost:3000/poi
 ```
 Displays all points of interest, or locations.
-Note that the "http://localhost:3000" can be changed to "https://csc-630-project.herokuapp.com" in any of the requests below
+**Note that the "http://localhost:3000" can be changed to "https://csc-630-project.herokuapp.com" in any of the requests above or below**
+For example:
+```sh
+https://csc-630-project.herokuapp.com/users
+```
+displays a JSON file of all users on the Heroku server
 ### POST
 You can post to the server by following this format:
 ```sh
@@ -92,11 +99,10 @@ $ curl --header "Content-Type: application/json" \
     http://localhost:3000/users
 ```
 Similar to PUT requests, you need to make sure that the ID is valid and is of the row you want to delete. Change the url as necessary.
-Locations is similar, just change the url from
+Locations is similar.
 ```sh
-http://.../users
-```
-to
-```sh
-http://.../poi
+$ curl --header "Content-Type: application/json" \
+    --request DELETE \
+    --data '{"id": 1}' \
+    http://localhost:3000/users
 ```
