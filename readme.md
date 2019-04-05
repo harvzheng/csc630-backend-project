@@ -1,3 +1,5 @@
+#NodeJS Backend Project
+By Harvey Zheng and Liv Maertens
 ## Getting Started
 Dependencies:
 - MySQL
@@ -59,7 +61,7 @@ A POST request that inserts  row into the locations table could look like this:
 ```sh
 $ curl --header "Content-Type: application/json" \
     --request POST \
-    --data '{"user_id":2,"title":"foo_bar_the_great", "house_number": 180, "street": "Main Street", "city": "Andover", "state": "MA", "country": "US"}' \
+    --data '{"user_id":1,"title":"foo_bar_the_great", "address": "180 Main Street, Andover MA"}' \
     http://localhost:3000/poi
 ```
 and once again, change the attributes and the url as necessary.
@@ -77,7 +79,7 @@ To update a location, follow this example:
 ```sh
 $ curl --header "Content-Type: application/json" \
     --request PUT \
-    --data '{"id": 1, user_id":2,"title":"foo_bar_the_greatest", "house_number": 180, "street": "Main Street", "city": "Andover", "state": "MA", "country": "US"}' \
+    --data '{"id": 1, user_id":2,"title":"The Googs", "address": "1600 Amphitheatre Parkway, Mountain View, CA"}' \
     http://localhost:3000/poi
 ```
 again, changing any attribtues necessary.
