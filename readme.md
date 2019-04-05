@@ -1,4 +1,4 @@
-#NodeJS Backend Project
+# NodeJS Backend Project
 A CSC630 Project by Harvey Zheng and Liv Maertens
 ## Getting Started
 Dependencies:
@@ -89,7 +89,7 @@ $ curl --header "Content-Type: application/json" \
     --data '{"id": 1, user_id":2,"title":"The Googs", "address": "1600 Amphitheatre Parkway, Mountain View, CA"}' \
     http://localhost:3000/poi
 ```
-again, changing any attribtues necessary.
+again, changing any attributes necessary.
 ### DELETE
 To delete a row from the server, follow this format:
 ```sh
