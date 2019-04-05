@@ -1,5 +1,5 @@
 #NodeJS Backend Project
-By Harvey Zheng and Liv Maertens
+A CSC630 Project by Harvey Zheng and Liv Maertens
 ## Getting Started
 Dependencies:
 - MySQL
@@ -46,7 +46,7 @@ Display's the single user's points of interest
 http://localhost:3000/poi
 ```
 Displays all points of interest, or locations.
-Note that the "http://localhost:3000" can be changed to "https://csc-630-project.herokuapp.com"
+Note that the "http://localhost:3000" can be changed to "https://csc-630-project.herokuapp.com" in any of the requests below
 ### POST
 You can post to the server by following this format:
 ```sh
@@ -70,7 +70,7 @@ You can update rows in the server with this format:
 ```sh
 $ curl --header "Content-Type: application/json" \
     --request POST \
-    --data '{'id': 1, "display_name":"funbar","username":"fun_bar_the_great", "latitude": 3, "longitude": 14}' \
+    --data '{"id": 1, "display_name":"funbar","username":"fun_bar_the_great", "latitude": 3, "longitude": 14}' \
     http://localhost:3000/users
 ```
 Make sure when you try to update something, the id is correct. Same idea follows as before, though: change the attributes as you like/need to
