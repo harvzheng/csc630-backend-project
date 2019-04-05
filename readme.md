@@ -29,7 +29,12 @@ $ node index.js
 ```
 All the code is in `index.js`, including creating a connection to the database and the routing. 
 ## Sending HTTP Requests
+### Parameters of a user and a location
+Users: id, username, display_name, latitude, longitude
+Locations: id, user_id, title, address, latitude, longitude
 
+POST doesn't use the id parameter (except for user_id).
+For locations, only POST user_id, title, and address, since latitude and longitude are both automatically determined from the address.
 ### GET
 The following get requests are available on this site
 ```sh
