@@ -22,6 +22,7 @@ const con = mysql.createConnection({
 
 //this tutorial was used for table creation: https://www.w3schools.com/nodejs/nodejs_mysql.asp
 //data type for lat/long is taken from here: https://stackoverflow.com/questions/1196415/what-datatype-to-use-when-storing-latitude-and-longitude-data-in-sql-databases
+
 con.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
@@ -42,10 +43,10 @@ app.get('/', function(req, res) {
   res.send("CSC630 project by Harvey and Liv");
 });
 
+//routing users requests
 //much of this code is modified from: https://medium.com/@avanthikameenakshi/building-restful-api-with-nodejs-and-mysql-in-10-min-ff740043d4be
 //and https://www.restapiexample.com/build-rest-api/create-rest-api-using-node-js-mysql-express/
 
-//routing user requests
 app.get('/users', function(req, res) {
   con.query('SELECT * FROM users', function(error, results, fields) {
     if (error) throw error;
@@ -78,11 +79,11 @@ app.put('/users', function (req, res) {
 app.delete('/users', function (req, res) {
    con.query('DELETE FROM `users` WHERE `id`=?', [req.body.id], function (error, results, fields) {
 	  if (error) throw error;
-	  res.end('Record has been deleted!');
+	  res.end('User has been deleted!');
 	});
 });
 
-//routing location requests
+//routing locations requests
 app.get('/users/:id/poi', function (req, res) {
    con.query('SELECT locations.title, locations.longitude, locations.latitude FROM locations WHERE locations.user_id=?', [req.params.id], function (error, results, fields) {
 	  if (error) throw error;
