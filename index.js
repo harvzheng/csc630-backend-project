@@ -19,7 +19,10 @@ const con = mysql.createConnection({
   password: process.env.DB_PASS,
   database: process.env.DATABASE,
 });
-
+const googleMapsClient = require('@google/maps').createClient({
+  key: process.env.API_KEY,
+  Promise: Promise,
+});
 //this tutorial was used for table creation: https://www.w3schools.com/nodejs/nodejs_mysql.asp
 //data type for lat/long is taken from here: https://stackoverflow.com/questions/1196415/what-datatype-to-use-when-storing-latitude-and-longitude-data-in-sql-databases
 
@@ -30,7 +33,10 @@ con.connect(function(err) {
   con.query(users, function (err, result) {
     if (err) throw err;
   });
-  var loc = "CREATE TABLE IF NOT EXISTS `locations` (`id` int(5) AUTO_INCREMENT, `user_id` varchar(255), `title` varchar(255), `house_number` int(7), `street` varchar(255), `city` varchar(255), `state` varchar(255), `country` varchar(255), `latitude` Decimal(9,6), `longitude` Decimal(9,6), PRIMARY KEY (`id`));";
+  // con.query("DROP TABLE IF EXISTS `locations`", function (err, result){
+  //   if (err) throw err;
+  // });
+  var loc = "CREATE TABLE IF NOT EXISTS `locations` (`id` int(5) AUTO_INCREMENT, `user_id` varchar(255), `title` varchar(255), `address` varchar(255), `latitude` Decimal(9,6), `longitude` Decimal(9,6), PRIMARY KEY (`id`));";
   con.query(loc, function (err, result){
     if (err) throw err;
   });
@@ -99,38 +105,32 @@ app.get('/poi', function (req, res) {
 });
 
 app.post('/poi', function (req, res) {
-  let data = ''
-  https.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.house_number}+${req.body.street}+${req.body.city},${req.body.state}+${req.body.country}&key=${process.env.API_KEY}`, (response) => {
-  //http request handled in a way that is modified from https://www.twilio.com/blog/2017/08/http-requests-in-node-js.html
-    response.on('data', (chunk) => {
-        data += chunk;
-    })
-    response.on('end', function(){
-      let lat = JSON.parse(data)['results'][0]['geometry']['location']['lat']
-      let lng = JSON.parse(data)['results'][0]['geometry']['location']['lng']
-      con.query('INSERT INTO locations (user_id, title, house_number, street, city, country, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [req.body.user_id, req.body.title, req.body.house_number, req.body.street, req.body.city, req.body.country, lat, lng], function (error, results, fields) {
+  googleMapsClient.geocode({address: req.body.address})
+    .asPromise()
+    .then((response) => {
+      coords = response.json.results[0]['geometry']['location'];
+      con.query('INSERT INTO locations (user_id, title, address, latitude, longitude) VALUES (?, ?, ?, ?, ?)', [req.body.user_id, req.body.title, req.body.address, coords.lat, coords.lng], function (error, results, fields) {
         if (error) throw error;
         res.end(JSON.stringify(results));
       });
-    });
+    })
+    .catch((err) => {
+      throw err;
   });
 });
 
 app.put('/poi', function (req, res) {
-  let data = ''
-  https.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${req.body.house_number}+${req.body.street}+${req.body.city},${req.body.state}+${req.body.country}&key=${process.env.API_KEY}`, (response) => {
-  //http request handled in a way that is modified from https://www.twilio.com/blog/2017/08/http-requests-in-node-js.html
-    response.on('data', (chunk) => {
-        data += chunk;
+  googleMapsClient.geocode({address: req.body.address})
+    .asPromise()
+    .then((response) => {
+      coords = response.json.results[0]['geometry']['location'];
+      con.query('UPDATE `locations` SET `user_id`=?,`title`=?,`address`=?, `latitude`=?, `longitude`=? where `id`=?', [req.body.user_id, req.body.title, req.body.address, coords.lat, coords.lng, req.body.id], function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+      });
     })
-    response.on('end', function(){
-      let lat = JSON.parse(data)['results'][0]['geometry']['location']['lat']
-      let lng = JSON.parse(data)['results'][0]['geometry']['location']['lng']
-      con.query('UPDATE `locations` SET `user_id`=?,`title`=?,`house_number`=?,`street`=?, `city`=?, `country`=?, `latitude`=?, `longitude`=? where `id`=?', [req.body.user_id, req.body.title, req.body.house_number, req.body.street, req.body.city, req.body.country, lat, lng, req.body.id], function (error, results, fields) {
-     	  if (error) throw error;
-     	  res.end(JSON.stringify(results));
-     	});
-    });
+    .catch((err) => {
+      throw err;
   });
 });
 
