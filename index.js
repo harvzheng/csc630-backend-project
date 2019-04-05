@@ -33,9 +33,9 @@ con.connect(function(err) {
   con.query(users, function (err, result) {
     if (err) throw err;
   });
-  // con.query("DROP TABLE IF EXISTS `locations`", function (err, result){
-  //   if (err) throw err;
-  // });
+  con.query("DROP TABLE IF EXISTS `locations`", function (err, result){
+    if (err) throw err;
+  });
   var loc = "CREATE TABLE IF NOT EXISTS `locations` (`id` int(5) AUTO_INCREMENT, `user_id` varchar(255), `title` varchar(255), `address` varchar(255), `latitude` Decimal(9,6), `longitude` Decimal(9,6), PRIMARY KEY (`id`));";
   con.query(loc, function (err, result){
     if (err) throw err;
